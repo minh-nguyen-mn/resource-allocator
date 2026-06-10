@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Activity {
+  id                   String   @id @default(cuid())
+  title                String
+  category             String
+  priority             Int
+  frequency            String
+  occurrencesPerPeriod Int
+  durationMinutes      Int
+  locationType         String
+  remoteAllowed        Boolean  @default(false)
+  requiredEquipment    String[]
+  requiredSpecialist   String?
+  requiredAllied       String?
+  backupActivities     String[]
+}
+
+model Availability {
+  id         String   @id @default(cuid())
+  resourceId String
+  start      DateTime
+  end        DateTime
+  isAvailable Boolean @default(true)
+}
+
+model TravelPlan {
+  id          String   @id @default(cuid())
+  startDate   DateTime
+  endDate     DateTime
+  destination String
+  timezone    String
+}
